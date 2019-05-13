@@ -12,7 +12,7 @@ Fonte: https://itsalljustelectrons.blogspot.com/2016/01/Openrowset-Bulk-Rowset-P
 
 pessoas.txt
 --------------------------------------------------------------------------------------
-EM        Ken                      Sánchez                            0    02/08/2003
+EM        Ken                      SÃ¡nchez                            0    02/08/2003
 EM        Terri                    Duffy                              1    02/24/2002
 EM        Gary                     Altman                   III       0    12/27/2003
 EM        Rob                      Walters                            0    12/29/2001
