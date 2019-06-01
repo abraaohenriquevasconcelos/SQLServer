@@ -1,0 +1,65 @@
+USE [teste3]
+GO
+/****** Object:  Table [dbo].[tabela1]    Script Date: 01/06/2019 01:13:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tabela1](
+	[id_empregado] [int] NOT NULL,
+	[id_gerente] [int] NULL,
+	[nome] [varchar](25) NOT NULL,
+	[salario] [money] NOT NULL,
+ CONSTRAINT [pk_tabela1] PRIMARY KEY CLUSTERED 
+(
+	[id_empregado] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tabela2]    Script Date: 01/06/2019 01:13:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tabela2](
+	[id_departamento] [int] NOT NULL,
+	[nome] [varchar](25) NOT NULL,
+	[id_departamento_gerente] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_departamento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[tabela2]  WITH CHECK ADD FOREIGN KEY([id_departamento_gerente])
+REFERENCES [dbo].[tabela1] ([id_empregado])
+GO
+
+
+
+	alter function fn_legal(@var1 as int)
+		returns @tab table
+		(
+			ID_Gerente int not null,
+			Nome_Gerente varchar(100) not null
+		)
+		as
+		begin
+				with cte1(ID_Gerente, Nome_Gerente)
+				as
+				(
+					select a.id_empregado as ID_Gerente, a.nome as Nome_Gerente
+					from tabela1 a where a.id_empregado = @var1
+				)
+				insert into @tab select * from cte1
+				return
+		end
+
+
+		select * from tabela2
+
+
+		select a.id_departamento, a.nome, a.id_departamento_gerente, Nome_Gerente, b.ID_Gerente
+		from tabela2 as a outer apply fn_legal(a.id_departamento_gerente) as b
+
+			select * from tabela2
