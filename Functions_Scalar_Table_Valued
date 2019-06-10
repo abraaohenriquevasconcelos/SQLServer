@@ -1,0 +1,72 @@
+/* 
+select tab.* from
+(
+	values (10 , 20, 30,40,50) ,
+		   (60 , 70, 80,90,100)
+
+) tab(a,b,c,d,e)
+
+*/
+
+
+/*
+select tab1.*
+into temporaria
+from
+(
+	values (10,20,30,40), (50,60,70,80)
+)tab1(col1,col2,col3,col4)
+
+
+*/
+
+/*
+
+create function fn1(@x int, @y int)
+returns int
+as
+begin
+	return @x+@y
+end
+
+*/
+
+
+
+/* 
+select dbo.fn1(col1, col2) as Primeira, dbo.fn1(col3, col4) as Segunda
+from temporaria
+
+*/
+
+
+
+/*
+create function fn_2 
+(
+	@x int, 
+	@y int
+)
+returns @tab table
+(
+	resultado int
+)
+as 
+begin
+	insert into @tab(resultado) select @x + @y
+
+	return
+end
+*/
+
+
+
+/* 
+select temporaria.*, tab2.resultado as Resultado_col1_col2, tab3.* 
+from 
+	temporaria
+cross apply dbo.fn_2(col1, col2) tab2
+cross apply dbo.fn_2(col3,col4) tab3
+
+
+*/
